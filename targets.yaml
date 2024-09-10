@@ -1,0 +1,5 @@
+targets:
+  ".config/waybar": "/home/damien/.config/waybar"
+  ".config/hypr": "/home/damien/.config/hypr"
+  ".zshrc": "/home/damien/.zshrc"
+  ".vimrc": "/home/damien/.vimrc"

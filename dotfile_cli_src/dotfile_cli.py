@@ -4,13 +4,12 @@ import sys
 import argparse
 import os
 import shutil
+import yaml
 
-targets = {
-    ".config/waybar": "/home/damien/.config/waybar",
-    ".config/hypr": "/home/damien/.config/hypr",
-    ".zshrc": "/home/damien/.zshrc",
-    ".vimrc": "/home/damien/.vimrc"
-}
+# Load targets from external YAML file
+with open('targets.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+    targets = config['targets']
 
 def main():
     parser = argparse.ArgumentParser(description='Process command line arguments')
