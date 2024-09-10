@@ -1,6 +1,7 @@
 
 import socket
 import json
+import html
 
 def simulate_echo_status():
     # 创建一个TCP socket
@@ -50,5 +51,6 @@ out["text"] = simulate_echo_status()
 if out['text'] == "":
     out['text'] = "background ~"
 
-# 将输出打印为JSON字符串
+# 转义特殊字符并将输出打印为JSON字符串
+out["text"] = html.escape(out["text"])
 print(json.dumps(out, ensure_ascii=False))
