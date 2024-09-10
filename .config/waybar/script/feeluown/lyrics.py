@@ -2,34 +2,38 @@
 import socket
 import json
 import html
+import asyncio
 
-def simulate_echo_status():
+async def simulate_echo_status():
     # 创建一个TCP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setblocking(False)
     output = ""
     try:
-        # 连接到本地23333端口
-        sock.connect(('localhost', 23333))
+        # 异步连接到本地23333端口
+        await asyncio.get_event_loop().sock_connect(sock, ('localhost', 23333))
         
-        # 发送"status"命令
-        sock.sendall(b'status\n')
+        # 异步发送"status"命令
+        await asyncio.get_event_loop().sock_sendall(sock, b'status\n')
         
-        # 接收响应
+        # 异步接收响应
         response = b''
         recved = 0
         while recved < 3:
-            chunk = sock.recv(1024)
-            if not chunk:
+            try:
+                chunk = await asyncio.wait_for(asyncio.get_event_loop().sock_recv(sock, 1024), timeout=1.0)
+                if not chunk:
+                    break
+                response += chunk
+                recved += 1
+            except asyncio.TimeoutError:
                 break
-            # print(chunk)
-            response += chunk
-            recved += 1
         
         # 处理响应
         decoded_response = response.decode('utf-8')
         lines = decoded_response.split('\n')
         
-        # 打印格式化的响应
+        # 处理格式化的响应
         for line in lines[2:]:
             if line.strip():
                 key, value = line.split(':', 1)
@@ -46,11 +50,15 @@ def simulate_echo_status():
     return output
 
 # 运行模拟
-out = {}
-out["text"] = simulate_echo_status()
-if out['text'] == "":
-    out['text'] = "background ~"
+async def main():
+    out = {}
+    out["text"] = await simulate_echo_status()
+    if out['text'] == "":
+        out['text'] = "background ~"
 
-# 转义特殊字符并将输出打印为JSON字符串
-out["text"] = html.escape(out["text"])
-print(json.dumps(out, ensure_ascii=False))
+    # 转义特殊字符并将输出打印为JSON字符串
+    out["text"] = html.escape(out["text"])
+    print(json.dumps(out, ensure_ascii=False))
+
+# 运行异步主函数
+asyncio.run(main())
