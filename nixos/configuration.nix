@@ -88,6 +88,14 @@
     ];
   };
 
+  users.users.vmtest = {
+    isNormalUser = true;
+    description = "vmtest";
+    initialPassword = "vmtest";
+    group = "vmtest";
+  };
+  users.groups.vmtest = {};
+
   # Install firefox.
   programs.firefox.enable = true;
 

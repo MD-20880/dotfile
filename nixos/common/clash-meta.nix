@@ -8,6 +8,10 @@
         clash-verge
     ];
 
+    # Prepare Clash Configuration fils here
+
+    # TODO: Maybe it is a good idea to run it under root ?
+    
     systemd.services.clash-meta = {
     description = "clash-meta";
     wantedBy = [ "multi-user.target" ];
