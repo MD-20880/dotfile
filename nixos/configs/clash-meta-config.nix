@@ -1,7 +1,7 @@
 { 
     pkgs, 
     config, 
-    subscribe_link ? "", 
+    subscribe_link ? "https://api.dler.io/sub?target=clash&url=https%3A%2F%2Fdler.cloud%2Fsubscribe%2FKZvM7hy6oQBXDCsdlf2O%3Fclash%3Dsmart%26lv%3D2%257C3%257C4", 
     geoip_link ? "https://cdn.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb", ... }:
 
 pkgs.stdenv.mkDerivation {

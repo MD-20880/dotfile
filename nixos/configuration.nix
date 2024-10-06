@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./default/default.nix
+      ./default/devel.nix
     ];
 
   # Bootloader.
@@ -107,13 +108,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    vim
-    wget
-    google-chrome
-    git
-    vscode
-    # wineWowPackages.full
-    # discord
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
