@@ -91,6 +91,7 @@
   users.users.vmtest = {
     isNormalUser = true;
     description = "vmtest";
+    extraGroups = ["wheel"];
     initialPassword = "vmtest";
     group = "vmtest";
   };
@@ -111,6 +112,7 @@
     google-chrome
     git
     vscode
+    # wineWowPackages.full
     # discord
   ];
 

@@ -1,26 +1,29 @@
 
 {config, pkgs , ...} :
 
+let clash-config = pkgs.callPackage ../configs/clash-meta-config.nix {
+  inherit config;
+  inherit pkgs;
+  subscribe_link = "https://api.dler.io/sub?target=clash&url=https%3A%2F%2Fdler.cloud%2Fsubscribe%2FKZvM7hy6oQBXDCsdlf2O%3Fclash%3Dsmart%26lv%3D2%257C3%257C4";
+};
+in 
 {
     #systemPackages
-    environment.systemPackages = with pkgs; [
-        clash-meta
-        clash-verge
+    environment.systemPackages = [
+        pkgs.clash-meta
+        pkgs.clash-verge
+        clash-config
     ];
 
-    # Prepare Clash Configuration fils here
-
-    # TODO: Maybe it is a good idea to run it under root ?
-    
+    # Prepare Clash Configuration fils under root file
     systemd.services.clash-meta = {
     description = "clash-meta";
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      User = "damien";
-      Groups = "damien";
-      ExecStart = "${pkgs.clash-meta}/bin/clash-meta -d /home/damien/.config/mihomo";
+      User = "root";
+      Groups = "root";
+      ExecStart = "${pkgs.clash-meta}/bin/clash-meta -d ${clash-config}/.config/mihomo/";
       Restart = "always";
     };
   };
-
 }
