@@ -24,8 +24,15 @@ in
         #vim
         pkgs.vim
 
+        #communication
+        pkgs.discord
+        pkgs.telegram-desktop
+
+        #RSS
+        pkgs.miniflux
+
         #oh-my-zsh
-        pkgs.oh-my-zsh
+        # pkgs.oh-my-zsh
 
         #PDF VIEWER
     ];
