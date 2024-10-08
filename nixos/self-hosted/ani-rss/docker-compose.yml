@@ -1,0 +1,15 @@
+version: "3"
+services:
+  ani-rss:
+    container_name: ani-rss
+    volumes:
+      - /home/damien/.config/ani-rss:/config
+      - /home/damien/Downloads/ani-rss/Media:/Media
+    ports:
+      - 7789:7789
+    environment:
+      - PORT=7789
+      - CONFIG=/config
+      - TZ=Asia/Shanghai
+    restart: always
+    image: wushuo894/ani-rss

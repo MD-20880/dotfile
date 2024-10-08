@@ -10,8 +10,9 @@ in
 {
     #import configs
     environment.systemPackages = [
-        #browser
-        pkgs.google-chrome
+        #mail
+        pkgs.thunderbird
+
 
         #neofetch
         pkgs.neofetch
@@ -24,17 +25,41 @@ in
         #vim
         pkgs.vim
 
+        #media
+        pkgs.vlc
+
+        #office
+        pkgs.libreoffice-qt6-fresh
+
         #communication
         pkgs.discord
         pkgs.telegram-desktop
 
         #RSS
-        pkgs.miniflux
+        pkgs.libsForQt5.akregator
+
+        #torrent
+        pkgs.qbittorrent-qt5
 
         #oh-my-zsh
         # pkgs.oh-my-zsh
 
         #PDF VIEWER
+
+        #Fun things
+        pkgs.gnuradio
+
+        #password manager
+        pkgs.enpass
+
+        #tools
+        pkgs.localsend
+
+        #games
+        pkgs.steam
+        pkgs.docker
+        pkgs.docker-compose
+        
     ];
 
     # Prepare Clash Configuration fils under root file
@@ -47,5 +72,26 @@ in
       ExecStart = "${pkgs.clash-meta}/bin/clash-meta -d ${clash-config}/.config/mihomo/";
       Restart = "always";
     };
+  };
+    
+    systemd.services.docker = {
+      description = "dockerd";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "notify";
+        ExecStart = "${pkgs.docker}/bin/dockerd";
+        Restart = "always";
+        LimitNOFILE=1048576;
+      };
+    };
+
+  i18n.inputMethod={
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk
+      fcitx5-chinese-addons
+      fcitx5-nord
+    ];
   };
 }
