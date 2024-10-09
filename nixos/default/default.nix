@@ -24,6 +24,7 @@ in
 
         #vim
         pkgs.vim
+	pkgs.neovim
 
         #media
         pkgs.vlc
@@ -54,6 +55,7 @@ in
 
         #tools
         pkgs.localsend
+        pkgs.ncdu
 
         #games
         pkgs.steam
